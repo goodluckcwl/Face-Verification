@@ -32,11 +32,10 @@ F2 = max(F2(:,1:512) , F2(:, 513:end));
 same_label = ones(6000,1);
 same_label(3001:6000) = 0;
 
-
-
 % F1 = bsxfun(@rdivide, F1, sqrt(sum(F1.^2,2)));
 % F2 = bsxfun(@rdivide, F2, sqrt(sum(F2.^2,2))); 
 
+%% Plot the distribution of distance
 thresh = zeros(size(F1,1),1);
 for j = 1:size(F1,1)
 %     thresh(j) = sqrt(sum((F1(j,:)-F2(j,:)).^2));
@@ -48,6 +47,7 @@ hist(thresh(3001:6000),200);
 hold off;
 title('The distribution of cosine distance ');
 
+%% Plot ROC Curve
 MAX = max(thresh);
 MIN = min(thresh);
 roc_x = [];
@@ -70,7 +70,6 @@ ylabel('TPR');
 accuracies = zeros(10,1);
 accs = zeros(10,1);
 for i = 1:10
-    
     test_idx = [(i-1) * 300 + 1:i*300, (i-1) * 300 + 3001:i*300 + 3000];
     train_idx = 1:6000;
     train_idx(test_idx) = [];
@@ -85,7 +84,6 @@ for i = 1:10
     F1_pca = F1_score(:,1:dims);
     F2_pca = F2_score(:,1:dims);
     for j = 1:size(F1,1)
-%         thresh(j) = sqrt(sum((F1_pca(j,:)-F2_pca(j,:)).^2));
         thresh(j) = 1- F1_pca(j,:)*F2_pca(j,:)'/(norm(F1_pca(j,:))*norm(F2_pca(j,:)));
     end
     
@@ -107,8 +105,8 @@ for i = 1:10
     [class] = svmpredict(same_label(train_idx), thresh(train_idx), model);
     [class, accuracy, deci] = svmpredict(same_label(test_idx), thresh(test_idx), model,'-b 1');
     accuracies(i) = accuracy(1);
-    roc_label = same_label(test_idx);
-    roc_label = [roc_label, 1-roc_label];
+%    roc_label = same_label(test_idx);
+%    roc_label = [roc_label, 1-roc_label];
 % %     plotroc(roc_label',deci');
 %     
 %     fp_idx = test_idx(find(class(301:600)>0) + 300);
