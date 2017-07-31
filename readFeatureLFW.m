@@ -15,7 +15,7 @@ caffe.set_device(gpu_id);
 
 %load caffe models
 prototxt_dir = '/home/chenweiliang/IDCard-Sphereface (another copy)/prototxt/sphereface_deploy.prototxt';
-model_dir = strcat(caffe_model_path,'/sphereface_iter_28000.caffemodel');
+model_dir = strcat(caffe_model_path,'/sphereface_iter_22000.caffemodel');
 net = caffe.Net(prototxt_dir,model_dir,'test');
 
 %process LFW dataset
@@ -61,4 +61,4 @@ for i=1:size(pairs,1)
     F2(i, :) = deepfeature';
 end
 
-save feature/lfw_feats_sphereface_iter_28000.mat F1 F2
+save feature/lfw_feats_sphereface_iter_22000.mat F1 F2
