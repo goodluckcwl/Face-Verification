@@ -1,5 +1,5 @@
 # Face-Verification
-Codes for face-verification on LFW. Both python version and matlab version.
+Codes for face-verification on LFW. Both python version and matlab version are provided.
 
 # Updates
 - Trained a model using Sphereface. Accuracy on LFW is 99.18%.
